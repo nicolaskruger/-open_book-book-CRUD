@@ -6,14 +6,6 @@ import bodyParser from 'body-parser';
 
 const port = process.env.PORT || 5000;
 
-const doorState = ['open', 'close'] as const;
-type DoorState = typeof doorState[number];
-
-
-
-let door:DoorState = "open";
-
-
 const app = express();
 
 app.use(cors())
@@ -22,7 +14,6 @@ app.use(bodyParser.json())
 app.get('/id/:id', (req, res) => {
     
     const id = req.params.id;
-
     res.json(
         findBookById(id)
     )
