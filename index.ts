@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { addBook, alterBook, findBookById, findBookByTitle } from './src/service/BookService';
+import { addBook, alterBook, findBookById, findBookByTitle } from './src/service/BookPrismaService';
 import { Book } from './src/dtos/book';
 import bodyParser from 'body-parser';
 
@@ -11,35 +11,35 @@ const app = express();
 app.use(cors())
 app.use(bodyParser.json())
 
-app.get('/id/:id', (req, res) => {
+app.get('/id/:id', async (req, res) => {
     
-    const id = req.params.id;
+    const id = Number(req.params.id);
     res.json(
-        findBookById(id)
+        await findBookById(id)
     )
 })
 
-app.get('/title/:id', (req, res) => {
+app.get('/title/:id',async (req, res) => {
 
     const id = req.params.id;
 
     res.json(
-        findBookByTitle(id)
+        await findBookByTitle(id)
     )
 })
 
-app.post('/', (req, res) => {
+app.post('/',async (req, res) => {
     
     const book = req.body as Book
     res.json(
-        addBook(book)
+        await addBook(book)
     )
 })
 
-app.put('/', (req, res) => {
+app.put('/',async (req, res) => {
     const book = req.body as Book
     res.json(
-        alterBook(book)
+        await alterBook(book)
     )
 })
 
